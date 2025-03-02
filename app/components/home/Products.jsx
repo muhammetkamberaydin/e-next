@@ -1,3 +1,4 @@
+import React from "react";
 import { products } from "@/utils/Products";
 import Heading from "../general/Heading";
 import ProductCard from "./ProductCard";

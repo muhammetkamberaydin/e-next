@@ -1,10 +1,13 @@
+"use client";
 import React from "react";
 import TextClip from "@/utils/TextClip";
 import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
+import { useRouter } from "next/navigation";
 
 interface productProps {
   products: {
+    id: number;
     image: string;
     title: string;
     price: number;
@@ -16,8 +19,14 @@ interface productProps {
 }
 
 const ProductCard: React.FC<productProps> = ({ products }) => {
+  const router = useRouter();
   return (
-    <div className="border-2 p-5 border-gray-200 cursor-pointer">
+    <div
+      onClick={() => {
+        router.push(`product/${products.id}`);
+      }}
+      className="border-2 p-5 border-gray-200 cursor-pointer"
+    >
       <div className="flex flex-center justify-center min-h-44 max-h-44 h-44">
         <img
           width={150}

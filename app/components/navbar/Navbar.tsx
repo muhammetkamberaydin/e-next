@@ -4,6 +4,7 @@ import Logo from "./Logo";
 import Search from "./Search";
 import User from "./User";
 import CardCount from "./CardCount";
+import { ToggleMode } from "./ToggleMode";
 
 const Navbar = () => {
   return (
@@ -13,6 +14,7 @@ const Navbar = () => {
       <div className="flex gap-4 items-center">
         <CardCount />
         <User />
+        <ToggleMode />
       </div>
       <Hamburger />
     </div>
