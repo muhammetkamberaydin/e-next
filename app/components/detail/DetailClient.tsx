@@ -2,8 +2,9 @@
 import React, { useState } from "react";
 import Counter from "../general/Counter";
 import Buttons from "../general/Buttons";
+import { useCart } from "@/hooks/useCart";
 
-interface ProductType {
+export interface ProductType {
   id: string;
   title: string;
   price: number;
@@ -13,22 +14,21 @@ interface ProductType {
 }
 
 export const DetailClient = ({ product }: { product: ProductType }) => {
+  const { addToBasket, cartPrdcts } = useCart(); 
+
   const [quantity, setQuantity] = useState(1);
 
   const handleQuantityChange = (newValue: number) => {
     setQuantity(newValue);
   };
 
-  console.log("asdasddasasd", quantity);
-  console.log("asdasd", product);
-
-  const addCard = () => {
-    const cardProduct = {
-      id: product.id,
-      title: product.title,
-      quanity: quantity,
-    };
-    console.log("cardProduct:", cardProduct);
+  const cardProduct = {
+    id: product.id,
+    title: product.title,
+    quantity: quantity,
+    price: product.price,
+    image: product.image,
+    description: product.description,
   };
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -51,7 +51,12 @@ export const DetailClient = ({ product }: { product: ProductType }) => {
             <Counter onChange={handleQuantityChange} value={quantity} />
           </div>
           <div>
-            <Buttons onclick={addCard} text={"Sepete Ekle"} />
+            <Buttons
+              onclick={() => {
+                addToBasket(cardProduct);
+              }}
+              text={"Sepete Ekle"}
+            />
           </div>
         </div>
       </div>

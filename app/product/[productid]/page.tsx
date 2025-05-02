@@ -8,13 +8,13 @@ type DetailProps = {
   };
 };
 
-const Detail: React.FC<DetailProps> = ({ params }) => {
-  console.log("Product ID:", params.productid);
+const Detail = ({ params }: DetailProps) => {
   const id = params.productid;
-  const product = products.find((item) => item.id === Number(id)); 
+  const product = products.find((item) => item.id === Number(id));
+
   return (
     <>
-      <DetailClient product={product}/>
+      <DetailClient product={product} />
     </>
   );
 };
