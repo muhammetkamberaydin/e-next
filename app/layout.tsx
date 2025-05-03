@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
 import CartProvider from "@/Provider/CartProvider";
+import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
   title: "e-next",
@@ -18,6 +19,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <CartProvider>
           <div className="flex flex-col min-h-screen">
             <Navbar />

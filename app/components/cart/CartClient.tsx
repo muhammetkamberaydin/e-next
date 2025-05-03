@@ -5,11 +5,10 @@ import Counter from "../general/Counter";
 import Buttons from "../general/Buttons";
 
 const CartClient = () => {
-  const { cartPrdcts } = useCart();
-  console.log("sasasas", cartPrdcts);
+  const { cartPrdcts, removeToBasket } = useCart();
 
-  const deleteBasket = (id) => {
-    alert(id);
+  const handleRemoveFromBasket = (product) => {
+    removeToBasket(product);
   };
 
   return (
@@ -29,7 +28,7 @@ const CartClient = () => {
             <div className="w-1/5">
               <Buttons
                 onclick={() => {
-                  deleteBasket(product.id);
+                  handleRemoveFromBasket(product);
                 }}
                 text={"Sil"}
               />

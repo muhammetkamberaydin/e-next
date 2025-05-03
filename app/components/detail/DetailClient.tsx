@@ -14,7 +14,7 @@ export interface ProductType {
 }
 
 export const DetailClient = ({ product }: { product: ProductType }) => {
-  const { addToBasket, cartPrdcts } = useCart(); 
+  const { addToBasket } = useCart();
 
   const [quantity, setQuantity] = useState(1);
 

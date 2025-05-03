@@ -7,11 +7,13 @@ import React, {
   useEffect,
   useState,
 } from "react";
+import { toast } from "react-toastify";
 
 interface CartContextProps {
   productCartQty: number;
   cartPrdcts: ProductType[];
   addToBasket: (product: ProductType) => void;
+  removeToBasket: (product: ProductType) => void;
 }
 
 const CartContext = createContext<CartContextProps | null>(null);
@@ -43,7 +45,7 @@ export const CartContextProvider = (props: Props) => {
           if (exsitingProduct) {
             updatedCart = prev.map((item) =>
               item.id == product.id
-                ? { ...item, quantity: product.quantity + 1 }
+                ? { ...item, quantity: item.quantity + 1 }
                 : item
             );
           } else {
@@ -52,9 +54,21 @@ export const CartContextProvider = (props: Props) => {
         } else {
           updatedCart = [product];
         }
-        localStorage.setItem("cart", JSON.stringify(updatedCart));
-
+        localStorage.setItem("cart", JSON.stringify(updatedCart)); 
+        toast.success("Sepete eklendi");
         return updatedCart;
+      });
+    },
+    [cartPrdcts]
+  );
+
+  const removeToBasket = useCallback(
+    (product: ProductType) => {
+      setCartPrdcts((item) => {
+        const newItems = item.filter((x) => x.id !== product.id);
+        localStorage.setItem("cart", JSON.stringify(newItems));
+        toast.error("Sepette silindi");
+        return newItems;
       });
     },
     [cartPrdcts]
@@ -64,6 +78,7 @@ export const CartContextProvider = (props: Props) => {
     productCartQty,
     addToBasket,
     cartPrdcts,
+    removeToBasket,
   };
   return <CartContext.Provider value={value} {...props} />;
 };
