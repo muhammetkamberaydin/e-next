@@ -43,7 +43,7 @@ export default function Counter({ value, onChange }: CounterProps) {
   const handleChange = (
     _event: React.SyntheticEvent,
     val: number | undefined
-  ) => {
+  ) => { 
     if (val !== undefined) {
       onChange(val);
     }

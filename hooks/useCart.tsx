@@ -14,6 +14,7 @@ interface CartContextProps {
   cartPrdcts: ProductType[];
   addToBasket: (product: ProductType) => void;
   removeToBasket: (product: ProductType) => void;
+  updateQuantity: (product: ProductType) => void;
 }
 
 const CartContext = createContext<CartContextProps | null>(null);
@@ -39,13 +40,14 @@ export const CartContextProvider = (props: Props) => {
   const addToBasket = useCallback(
     (product: ProductType) => {
       setCartPrdcts((prev) => {
+        debugger;
         let updatedCart;
         if (prev) {
           const exsitingProduct = prev.find((x) => x.id == product.id);
           if (exsitingProduct) {
             updatedCart = prev.map((item) =>
               item.id == product.id
-                ? { ...item, quantity: item.quantity + 1 }
+                ? { ...item, quantity: item.quantity + product.quantity }
                 : item
             );
           } else {
@@ -54,7 +56,7 @@ export const CartContextProvider = (props: Props) => {
         } else {
           updatedCart = [product];
         }
-        localStorage.setItem("cart", JSON.stringify(updatedCart)); 
+        localStorage.setItem("cart", JSON.stringify(updatedCart));
         toast.success("Sepete eklendi");
         return updatedCart;
       });
@@ -73,12 +75,22 @@ export const CartContextProvider = (props: Props) => {
     },
     [cartPrdcts]
   );
+  const updateQuantity = useCallback((id: number, qty: number) => {
+    setCartPrdcts((prev) => {
+      const updatedCart = prev.map((item) =>
+        item.id === id ? { ...item, quantity: qty } : item
+      );
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      return updatedCart;
+    });
+  }, []);
 
   const value = {
     productCartQty,
     addToBasket,
     cartPrdcts,
     removeToBasket,
+    updateQuantity,
   };
   return <CartContext.Provider value={value} {...props} />;
 };
